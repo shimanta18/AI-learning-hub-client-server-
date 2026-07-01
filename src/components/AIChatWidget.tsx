@@ -41,7 +41,11 @@ export default function AIChatWidget() {
                 },
                 body: JSON.stringify({
                     message: userMsg.content,
-                    history: messages.map(m => ({ role: m.role, content: m.content }))
+                    // FIX: Translates 'ai' to 'model' on the fly so the Gemini SDK understands the context without failing
+                    history: messages.map(m => ({
+                        role: m.role === 'ai' ? 'model' : 'user',
+                        content: m.content
+                    }))
                 })
             });
 
