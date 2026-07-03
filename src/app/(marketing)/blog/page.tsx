@@ -5,19 +5,19 @@ import { BLOG_POSTS } from './posts';
 
 export default function BlogLandingPage() {
     return (
-        <div className="w-full min-h-screen bg-white text-slate-900 flex flex-col justify-between selection:bg-slate-200">
+        <div className="w-full min-h-screen bg-white text-slate-900 flex flex-col justify-between selection:bg-slate-200 dark:bg-slate-950 dark:text-slate-50 dark:selection:bg-slate-800 transition-colors duration-200">
 
             {/* MAIN MAIN CONTENT CONTAINER */}
             <main className="flex-grow">
                 {/* Intro Title Header Canvas */}
-                <div className=" mx-auto px-5 sm:px-9 lg:px-8 pt-20 pb-12 border-b border-slate-300">
-                    <span className="text-xs uppercase font-extrabold tracking-widest text-slate-400 block mb-3">
+                <div className="mx-auto px-5 sm:px-9 lg:px-8 pt-20 pb-12 border-b border-slate-300 dark:border-slate-800">
+                    <span className="text-xs uppercase font-extrabold tracking-widest text-slate-400 dark:text-slate-500 block mb-3">
                         Blog
                     </span>
-                    <h1 className="text-4xl sm:text-5xl font-black text-slate-950 font-light mb-4">
+                    <h1 className="text-4xl sm:text-5xl font-black text-slate-950 dark:text-white font-light mb-4">
                         Notes from the field
                     </h1>
-                    <p className="text-base sm:text-lg text-slate-500 font-medium max-w-xl leading-relaxed">
+                    <p className="text-base sm:text-lg text-slate-500 dark:text-slate-400 font-medium max-w-xl leading-relaxed">
                         Short, opinionated essays from our instructors on learning, AI engineering, and the craft of shipping.
                     </p>
                 </div>
@@ -28,25 +28,25 @@ export default function BlogLandingPage() {
                         {BLOG_POSTS.map((post) => (
                             <article
                                 key={post.id}
-                                className="group flex flex-col justify-between p-6 bg-white border border-slate-100 rounded-2xl shadow-sm hover:shadow-md hover:border-slate-200 transition-all duration-200"
+                                className="group flex flex-col justify-between p-6 bg-white border border-slate-100 rounded-2xl shadow-sm hover:shadow-md hover:border-slate-200 transition-all duration-200 dark:bg-slate-900 dark:border-slate-800/60 dark:hover:border-slate-700"
                             >
                                 <div className="space-y-4">
                                     {/* Post Metadata Row */}
-                                    <div className="flex items-center space-x-2 text-xs font-semibold text-slate-400">
+                                    <div className="flex items-center space-x-2 text-xs font-semibold text-slate-400 dark:text-slate-500">
                                         <span>{post.date}</span>
                                         <span>•</span>
                                         <span>{post.readingTime}</span>
                                     </div>
 
                                     {/* Heading Link */}
-                                    <h2 className="text-xl font-bold text-slate-950 tracking-tight group-hover:text-blue-600 transition-colors line-clamp-2">
+                                    <h2 className="text-xl font-bold text-slate-950 dark:text-white tracking-tight group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-2">
                                         <Link href={`/blog/${post.slug}`}>
                                             {post.title}
                                         </Link>
                                     </h2>
 
                                     {/* Snippet Description Context */}
-                                    <p className="text-xs sm:text-sm text-slate-500 font-medium leading-relaxed line-clamp-3">
+                                    <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-medium leading-relaxed line-clamp-3">
                                         {post.description}
                                     </p>
                                 </div>
@@ -55,7 +55,7 @@ export default function BlogLandingPage() {
                                 <div className="pt-6 mt-auto">
                                     <Link
                                         href={`/blog/${post.slug}`}
-                                        className="inline-flex items-center text-xs font-bold text-blue-600 hover:text-blue-700 transition-colors group/btn"
+                                        className="inline-flex items-center text-xs font-bold text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 transition-colors group/btn"
                                     >
                                         <span>Read post</span>
                                         <svg

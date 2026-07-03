@@ -78,7 +78,7 @@ export function ClientLayoutWrapper({ children }: { children: React.ReactNode })
                                 {resourcesOpen && (
                                     <div className="absolute left-0 mt-2 w-56 bg-white border border-slate-200 rounded-2xl shadow-xl py-2 z-50">
                                         <Link href="/faq" onClick={() => setResourcesOpen(false)} className="block px-4 py-2 text-sm text-slate-600 hover:bg-slate-50 hover:text-slate-900">Help & FAQ</Link>
-                                        <Link href="/tutorials" onClick={() => setResourcesOpen(false)} className="block px-4 py-2 text-sm text-slate-600 hover:bg-slate-50 hover:text-slate-900">Tutorials</Link>
+                                        <Link href="/courses" onClick={() => setResourcesOpen(false)} className="block px-4 py-2 text-sm text-slate-600 hover:bg-slate-50 hover:text-slate-900">All courses</Link>
                                     </div>
                                 )}
                             </div>
