@@ -59,7 +59,7 @@ export default function ManageCoursesPage() {
         setIsModalOpen(true);
     };
 
-    // 1. Fetch live courses
+    //  Fetch live courses
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, async (user) => {
             if (!user) {
@@ -98,7 +98,7 @@ export default function ManageCoursesPage() {
         return () => unsubscribe();
     }, [API_BASE_URL]);
 
-    // 2. Handle deleting a course
+    //  Handle deleting a course
     const handleDeleteCourse = async (id: string) => {
         if (!confirm('Are you sure you want to permanently delete this course?')) return;
 
@@ -124,7 +124,7 @@ export default function ManageCoursesPage() {
         }
     };
 
-    // 3. Combined Submit Handler (Handles both POST Create and PUT Update)
+    //  Combined Submit Handler (Handles both POST Create and PUT Update)
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setSubmitting(true);

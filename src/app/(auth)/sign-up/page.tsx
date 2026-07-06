@@ -3,7 +3,13 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import {
+    createUserWithEmailAndPassword,
+    updateProfile,
+    signInWithPopup,
+    GoogleAuthProvider,
+    GithubAuthProvider
+} from 'firebase/auth';
 import { auth } from '@/lib/firebase';
 
 export default function SignUpPage() {
@@ -15,27 +21,22 @@ export default function SignUpPage() {
 
     const router = useRouter();
 
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setAuthError('');
         setIsSubmitting(true);
 
         try {
-            //  Create the authentication profile in Firebase
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
 
-            //  Update the user profile display name with their full name
             if (userCredential.user) {
                 await updateProfile(userCredential.user, {
                     displayName: name,
                 });
             }
-
-            //  Redirect the newly registered user straight to the dashboard workspace
             router.push('/dashboard');
-
         } catch (err: any) {
-            // Parse common Firebase errors into clean messaging
             if (err.code === 'auth/email-already-in-use') {
                 setAuthError('This email is already registered.');
             } else if (err.code === 'auth/weak-password') {
@@ -47,8 +48,41 @@ export default function SignUpPage() {
         }
     };
 
+
+    const handleGoogleSignUp = async () => {
+        setAuthError('');
+        setIsSubmitting(true);
+        const provider = new GoogleAuthProvider();
+
+        try {
+            await signInWithPopup(auth, provider);
+            router.push('/dashboard');
+        } catch (err: any) {
+            if (err.code !== 'auth/popup-closed-by-user') {
+                setAuthError(err.message || 'Google registration failed.');
+            }
+            setIsSubmitting(false);
+        }
+    };
+
+
+    const handleGitHubSignUp = async () => {
+        setAuthError('');
+        setIsSubmitting(true);
+        const provider = new GithubAuthProvider();
+
+        try {
+            await signInWithPopup(auth, provider);
+            router.push('/dashboard');
+        } catch (err: any) {
+            if (err.code !== 'auth/popup-closed-by-user') {
+                setAuthError(err.message || 'GitHub registration failed.');
+            }
+            setIsSubmitting(false);
+        }
+    };
+
     return (
-        // Explicit flex split container to enforce absolute side-by-side consistency
         <div className="w-full h-screen flex bg-white text-slate-900 overflow-hidden">
 
             {/* LEFT CONTENT COL: Register inputs canvas */}
@@ -80,10 +114,20 @@ export default function SignUpPage() {
 
                     {/* Social OAuth Stack */}
                     <div className="space-y-2.5">
-                        <button type="button" className="w-full py-2 px-4 bg-white border border-slate-200 rounded-xl font-bold text-xs text-slate-700 flex items-center justify-center space-x-2 hover:bg-slate-50 transition-colors shadow-2xs">
+                        <button
+                            type="button"
+                            onClick={handleGoogleSignUp}
+                            disabled={isSubmitting}
+                            className="w-full py-2 px-4 bg-white border border-slate-200 rounded-xl font-bold text-xs text-slate-700 flex items-center justify-center space-x-2 hover:bg-slate-50 transition-colors shadow-2xs disabled:opacity-50"
+                        >
                             <span>Sign up with Google</span>
                         </button>
-                        <button type="button" className="w-full py-2 px-4 bg-white border border-slate-200 rounded-xl font-bold text-xs text-slate-700 flex items-center justify-center space-x-2 hover:bg-slate-50 transition-colors shadow-2xs">
+                        <button
+                            type="button"
+                            onClick={handleGitHubSignUp}
+                            disabled={isSubmitting}
+                            className="w-full py-2 px-4 bg-white border border-slate-200 rounded-xl font-bold text-xs text-slate-700 flex items-center justify-center space-x-2 hover:bg-slate-50 transition-colors shadow-2xs disabled:opacity-50"
+                        >
                             <span>Sign up with GitHub</span>
                         </button>
                     </div>
@@ -162,8 +206,6 @@ export default function SignUpPage() {
 
             {/* RIGHT PANEL COL: Synchronized Dark Value Presentation Pane */}
             <div className="hidden lg:flex lg:w-1/2 h-full bg-slate-950 text-white px-16 lg:px-24 py-12 flex-col justify-between relative overflow-hidden">
-
-                {/* Soft Radial Backlighting Gradient */}
                 <div className="absolute -right-24 bottom-0 w-[400px] h-[400px] bg-blue-600/10 rounded-full blur-[100px] pointer-events-none" />
 
                 <div className="z-10">
