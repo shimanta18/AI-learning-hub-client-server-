@@ -13,10 +13,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     const [user, setUser] = useState<User | null>(null);
     const [role, setRole] = useState<Role>('User');
     const [loading, setLoading] = useState(true);
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const router = useRouter();
     const pathname = usePathname();
 
-    // Dynamic base URL check (uses live production URL environment variable or local port fallback)
     const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
 
     useEffect(() => {
@@ -43,13 +43,11 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                     const dbRole = result.role?.trim().toLowerCase();
                     setRole(dbRole === 'admin' ? 'Admin' : 'User');
                 } else {
-                    // Fallback to email validation if backend responds with an error status
                     const email = currentUser.email?.toLowerCase() || '';
                     setRole(email.includes('admin') ? 'Admin' : 'User');
                 }
             } catch (error) {
                 console.error("Failed to verify admin status from database:", error);
-                // Fallback to email validation if network/server is completely unreachable
                 const email = currentUser.email?.toLowerCase() || '';
                 setRole(email.includes('admin') ? 'Admin' : 'User');
             } finally {
@@ -59,6 +57,11 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
         return () => unsubscribe();
     }, [router, API_BASE_URL]);
+
+
+    useEffect(() => {
+        setIsMobileMenuOpen(false);
+    }, [pathname]);
 
     const handleLogout = async () => {
         try {
@@ -94,37 +97,67 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     const currentMenus = role === 'Admin' ? adminMenus : userMenus;
 
     return (
-        <div className="w-full min-h-screen bg-slate-50 text-slate-900 flex flex-col font-sans">
+        <div className="w-full h-screen bg-slate-50 text-slate-900 flex flex-col font-sans overflow-hidden">
+
             {/* Global Dashboard Header */}
-            <header className="w-full border-b border-slate-200 bg-white px-6 py-4 flex items-center justify-between shadow-sm z-10">
+            <header className="w-full border-b border-slate-200 bg-white px-4 sm:px-6 py-4 flex items-center justify-between shadow-xs z-30 flex-shrink-0">
                 <div className="flex items-center space-x-3">
-                    <Link href="/" className="flex items-center space-x-3 group">
-                        <div className="w-10 h-10 rounded-xl bg-slate-950 text-white flex items-center justify-center font-bold shadow-sm transition-transform group-hover:scale-[1.02]">
-                            <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                    {/* Mobile Hamburger Menu Toggle Trigger Button */}
+                    <button
+                        onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                        className="p-1.5 md:hidden rounded-lg border border-slate-200 hover:bg-slate-50 text-slate-600 focus:outline-none"
+                    >
+                        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                            {isMobileMenuOpen ? (
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                            ) : (
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                            )}
+                        </svg>
+                    </button>
+
+                    <Link href="/" className="flex items-center space-x-2 sm:space-x-3 group">
+                        <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-slate-950 text-white flex items-center justify-center font-bold shadow-xs transition-transform group-hover:scale-[1.02]">
+                            <svg className="w-4 h-4 sm:w-5 sm:h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M7 17L17 7M17 7H7M17 7V17" />
                             </svg>
                         </div>
-                        <span className="font-extrabold text-xl tracking-tight text-slate-900">LearningHub</span>
+                        <span className="font-extrabold text-lg sm:text-xl tracking-tight text-slate-900">LearningHub</span>
                     </Link>
                 </div>
-                <div className="flex items-center space-x-4">
-                    <span className="text-xs text-slate-500 bg-slate-100 px-3 py-1.5 rounded-full border border-slate-200 font-medium">
-                        Logged in as: <strong className="text-slate-700">{user?.email}</strong>
+
+                <div className="flex items-center space-x-2 sm:space-x-4">
+                    <span className="text-[11px] sm:text-xs text-slate-500 bg-slate-100 px-2.5 py-1.5 rounded-full border border-slate-200 font-medium max-w-[160px] sm:max-w-none truncate">
+                        <span className="hidden xs:inline">Logged in as: </span>
+                        <strong className="text-slate-700 font-bold">{user?.email}</strong>
                     </span>
                     <button
                         onClick={handleLogout}
-                        className="text-xs bg-red-50 hover:bg-red-100 text-red-600 px-3 py-1.5 rounded-lg border border-red-200 transition-all font-semibold"
+                        className="text-[11px] sm:text-xs bg-red-50 hover:bg-red-100 text-red-600 px-2.5 py-1.5 rounded-lg border border-red-200 transition-all font-semibold whitespace-nowrap"
                     >
                         Sign Out
                     </button>
                 </div>
             </header>
 
-            {/* Layout Wrapper */}
-            <div className="flex flex-1">
-                {/* Context-Aware Sidebar */}
-                <aside className="w-64 border-r border-slate-200 bg-white p-6 flex flex-col space-y-6">
-                    <div className="space-y-2">
+            {/* Main Application Container Layout Frame */}
+            <div className="flex flex-1 relative h-full overflow-hidden">
+
+                {/* BACKDROP DIMMER SHEET: Closes navigation canvas drawer when clicking outside it on mobile */}
+                {isMobileMenuOpen && (
+                    <div
+                        className="fixed inset-0 bg-slate-900/40 backdrop-blur-xs z-20 md:hidden animate-in fade-in duration-200"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                    />
+                )}
+
+                {/* CONTEXT-AWARE SIDEBAR ACCORDION: Fluid overlay drawer on mobile, regular structural columns layout on desktop */}
+                <aside className={`
+                    fixed inset-y-0 left-0 w-64 bg-white p-6 border-r border-slate-200 z-20 flex flex-col space-y-6 flex-shrink-0
+                    transform transition-transform duration-300 ease-in-out md:static md:transform-none
+                    ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
+                `}>
+                    <div className="space-y-2 pt-16 md:pt-0">
                         <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block px-3">
                             {role} Panel
                         </span>
@@ -136,7 +169,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                                         key={item.href}
                                         href={item.href}
                                         className={`w-full block px-3 py-2.5 text-xs font-semibold rounded-lg transition-all ${isActive
-                                            ? 'bg-blue-50 text-blue-600 shadow-sm border-l-4 border-blue-600 rounded-l-none'
+                                            ? 'bg-blue-50 text-blue-600 shadow-xs border-l-4 border-blue-600 rounded-l-none'
                                             : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
                                             }`}
                                     >
@@ -148,17 +181,20 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                     </div>
                 </aside>
 
-                {/* Primary Panel Content */}
-                <main className="flex-1 p-8 overflow-y-auto">
-                    {children}
+                {/* PRIMARY CANVAS LAYER: Responsive paddings matching mobile viewports container specs */}
+                <main className="flex-1 p-4 sm:p-6 lg:p-8 overflow-y-auto h-full">
+                    <div className="max-w-7xl mx-auto w-full">
+                        {children}
 
-                    {/* Dashboard-level Recommendation Extensions */}
-                    {pathname === '/dashboard' && (
-                        <div className="mt-8 pt-4 border-t border-slate-200">
-                            <SmartRecommendations />
-                        </div>
-                    )}
+                        {/* Smart Recommendations Component injection */}
+                        {pathname === '/dashboard' && (
+                            <div className="mt-8 pt-4 border-t border-slate-200">
+                                <SmartRecommendations />
+                            </div>
+                        )}
+                    </div>
                 </main>
+
             </div>
         </div>
     );
