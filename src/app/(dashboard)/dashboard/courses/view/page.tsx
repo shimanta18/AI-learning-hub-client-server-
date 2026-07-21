@@ -72,6 +72,7 @@ function CourseContent() {
                 }
 
                 const data: Course = await res.json();
+                console.log("API Data received:", data);
                 setCourse(data);
             } catch (err: unknown) {
                 if ((err as Error).name !== 'AbortError') {
