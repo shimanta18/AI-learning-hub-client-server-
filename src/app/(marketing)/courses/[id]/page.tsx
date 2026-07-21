@@ -141,10 +141,16 @@ export default function CourseDetailsPage() {
                             <span className="text-3xl font-black text-slate-900">{course.price}</span>
                         </div>
 
-                        <button className="w-full py-4 bg-slate-950 hover:bg-slate-800 text-white font-black text-sm rounded-xl transition-all shadow-md transform active:scale-[0.99] flex items-center justify-center space-x-2">
+                        {/* REPLACED BUTTON WITH NEXT.JS LINK HERE */}
+                        <Link
+                            href={`/dashboard/courses/view?courseId=${courseId}`}
+                            className="w-full py-4 bg-slate-950 hover:bg-slate-800 text-white font-black text-sm rounded-xl transition-all shadow-md transform active:scale-[0.99] flex items-center justify-center space-x-2 group"
+                        >
                             <span>Enroll in Course</span>
-                            <span></span>
-                        </button>
+                            <svg className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                            </svg>
+                        </Link>
 
                         <div className="space-y-3.5 text-xs font-bold text-slate-500 pt-2 border-t border-slate-100">
                             <div className="flex items-center space-x-2">

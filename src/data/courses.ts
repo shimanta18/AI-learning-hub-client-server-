@@ -12,4 +12,5 @@ export interface Course {
     students: number;
     price: string;
     numericPrice: number;
+    youtubeId: string;
 }

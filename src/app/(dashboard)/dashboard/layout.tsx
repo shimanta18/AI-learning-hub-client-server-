@@ -9,6 +9,9 @@ import SmartRecommendations from '@/components/SmartRecommendations';
 
 type Role = 'User' | 'Admin';
 
+// Moved outside the component to prevent recreating on every render
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
     const [user, setUser] = useState<User | null>(null);
     const [role, setRole] = useState<Role>('User');
@@ -16,8 +19,6 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const router = useRouter();
     const pathname = usePathname();
-
-    const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
@@ -30,13 +31,16 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 setUser(currentUser);
                 const token = await currentUser.getIdToken();
 
-                const response = await fetch(`${API_BASE_URL}/api/v1/auth/me`, {
-                    method: 'GET',
-                    headers: {
-                        'Authorization': `Bearer ${token}`,
-                        'Content-Type': 'application/json'
+                const response = await fetch(
+                    `${API_BASE_URL}/api/v1/auth/me`,
+                    {
+                        method: 'GET',
+                        headers: {
+                            'Authorization': `Bearer ${token}`,
+                            'Content-Type': 'application/json'
+                        }
                     }
-                });
+                );
 
                 if (response.ok) {
                     const result = await response.json();
@@ -56,8 +60,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         });
 
         return () => unsubscribe();
-    }, [router, API_BASE_URL]);
-
+    }, [router]);
 
     useEffect(() => {
         setIsMobileMenuOpen(false);
@@ -143,7 +146,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             {/* Main Application Container Layout Frame */}
             <div className="flex flex-1 relative h-full overflow-hidden">
 
-                {/* BACKDROP DIMMER SHEET: Closes navigation canvas drawer when clicking outside it on mobile */}
+                {/* BACKDROP DIMMER SHEET */}
                 {isMobileMenuOpen && (
                     <div
                         className="fixed inset-0 bg-slate-900/40 backdrop-blur-xs z-20 md:hidden animate-in fade-in duration-200"
@@ -151,7 +154,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                     />
                 )}
 
-                {/* CONTEXT-AWARE SIDEBAR ACCORDION: Fluid overlay drawer on mobile, regular structural columns layout on desktop */}
+                {/* SIDEBAR ACCORDION */}
                 <aside className={`
                     fixed inset-y-0 left-0 w-64 bg-white p-6 border-r border-slate-200 z-20 flex flex-col space-y-6 flex-shrink-0
                     transform transition-transform duration-300 ease-in-out md:static md:transform-none
@@ -181,7 +184,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                     </div>
                 </aside>
 
-                {/* PRIMARY CANVAS LAYER: Responsive paddings matching mobile viewports container specs */}
+                {/* PRIMARY CANVAS LAYER */}
                 <main className="flex-1 p-4 sm:p-6 lg:p-8 overflow-y-auto h-full">
                     <div className="max-w-7xl mx-auto w-full">
                         {children}
