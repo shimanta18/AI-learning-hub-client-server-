@@ -62,8 +62,7 @@ function CourseContent() {
                 setError(null);
 
                 // 2. FIX: Added a fallback to localhost:5000 or your render URL so it doesn't query port 3000
-                const apiBase = process.env.NEXT_PUBLIC_API_BASE_URL || 'https://ai-learning-hub-server-side.onrender.com';
-
+                const apiBase = 'https://ai-learning-hub-server-side.onrender.com';
                 const res = await fetch(`${apiBase}/api/v1/courses/${courseId}`, {
                     signal: controller.signal,
                 });
