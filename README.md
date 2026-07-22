@@ -59,3 +59,43 @@ AI-Learning-Hub/
 ├── README.md                  # Project documentation
 └── LICENSE                    # Open-source license (MIT)
 Write a Strong README.md: A professional repository requires a comprehensive README. Include the project title, a brief description, screenshots of the UI, the tech stack used (React, Node.js, MongoDB, Tailwind), and step-by-step instructions on how to install and run the project locally (e.g., npm install, npm run dev).
+
+````
+
+🛠️ Getting Started Locally
+To run this project locally on your machine, follow these steps:
+
+1. Clone the Repository
+Bash
+```
+git clone [https://github.com/your-username/AI-Learning-Hub.git](https://github.com/your-username/AI-Learning-Hub.git)
+cd AI-Learning-Hub
+```
+3. Setup Backend
+Bash
+```
+cd backend
+npm install
+Create a .env file in the backend folder based on .env.example:
+```
+Code snippet
+```
+PORT=5000
+MONGO_URI=your_mongodb_connection_string
+JWT_SECRET=your_jwt_secret_key
+GEMINI_API_KEY=your_google_gemini_api_key
+Run the server:
+
+Bash
+npm run dev
+```
+3. Setup Frontend
+```
+cd ../frontend
+npm install
+Create a .env.local file in the frontend folder:
+```
+Code snippet
+```
+NEXT_PUBLIC_API_URL=http://localhost:5000/api
+```
