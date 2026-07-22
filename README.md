@@ -2,7 +2,6 @@ Here is the detailed English explanation of the GitHub project structure for you
 
 Since this is a full-stack MERN application using Next.js, utilizing a "Monorepo" structure (housing both frontend and backend within a single repository) is highly recommended for keeping everything organized.
 
-Plaintext
 AI-Learning-Hub/
 ├── .github/                   # (Optional) GitHub-specific files
 │   └── workflows/             # CI/CD pipelines (e.g., automated testing/deployment)
