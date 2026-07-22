@@ -36,6 +36,9 @@ AI-Learning-Hub/
 ├── .gitignore                 # Specifies which files Git should ignore (node_modules, .env)
 ├── README.md                  # Detailed project documentation
 └── LICENSE                    # Open-source license (e.g., MIT)
+
+
+
 Breakdown of Key Directories
 1. frontend/ (Client-Side)
 This handles everything the user interacts with. By utilizing the src/ directory, you keep configuration files separated from your actual application code. The app/ folder manages routing (a key feature of Next.js App Router), while components/ holds reusable modular UI elements built with Tailwind CSS.
