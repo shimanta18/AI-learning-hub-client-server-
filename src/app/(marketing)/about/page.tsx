@@ -6,12 +6,10 @@ import { ShieldMinus, FlaskConical, Heart } from 'lucide-react';
 export default function AboutPage() {
     // Team data matching your presentation pane matrix layout
     const team = [
-        { name: 'Amelia Tan', role: 'Research', initials: 'AT' },
-        { name: 'Jordan Park', role: 'Engineering', initials: 'JP' },
-        { name: 'Mei Chen', role: 'Curriculum', initials: 'MC' },
-        { name: 'Henrik Vald', role: 'ML', initials: 'HV' },
-        { name: 'Noor Hassan', role: 'Vision', initials: 'NH' },
-        { name: 'Carla Mendes', role: 'Platform', initials: 'CM' },
+        { name: 'Shimanta Chowdhury', role: 'Research', initials: 'AT' },
+        { name: 'MA Akib', role: 'Engineering', initials: 'JP' },
+        { name: 'Ahat', role: 'Curriculum', initials: 'MC' },
+
     ];
 
     return (

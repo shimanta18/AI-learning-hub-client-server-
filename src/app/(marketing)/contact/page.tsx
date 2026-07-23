@@ -154,7 +154,7 @@ export default function ContactPage() {
                             </div>
                             <div className="flex flex-col space-y-0.5">
                                 <span className="text-xs font-bold text-slate-950 dark:text-white tracking-tight">Phone</span>
-                                <span className="text-xs font-semibold text-slate-500 dark:text-slate-400">+1 (415) 555-0117</span>
+                                <span className="text-xs font-semibold text-slate-500 dark:text-slate-400">++8801567845901</span>
                                 <span className="text-[11px] text-slate-400 dark:text-slate-500 font-medium">Mon–Fri · 9am–6pm PT</span>
                             </div>
                         </div>
@@ -169,8 +169,8 @@ export default function ContactPage() {
                             </div>
                             <div className="flex flex-col space-y-0.5">
                                 <span className="text-xs font-bold text-slate-950 dark:text-white tracking-tight">Office</span>
-                                <span className="text-xs font-semibold text-slate-500 dark:text-slate-400">548 Market St</span>
-                                <span className="text-xs font-semibold text-slate-500 dark:text-slate-400">San Francisco, CA 94104</span>
+                                <span className="text-xs font-semibold text-slate-500 dark:text-slate-400">ctg</span>
+                                <span className="text-xs font-semibold text-slate-500 dark:text-slate-400">dhaka</span>
                             </div>
                         </div>
 

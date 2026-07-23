@@ -124,8 +124,8 @@ export default function Home() {
                             key={track}
                             onClick={() => setActiveTrack(track)}
                             className={`p-4 rounded-xl border text-left font-bold text-sm transition-all flex items-center justify-between shadow-sm focus:outline-none ${activeTrack === track
-                                    ? 'bg-blue-600 border-blue-600 text-white dark:bg-blue-500 dark:border-blue-500'
-                                    : 'bg-white border-slate-200 text-slate-800 dark:bg-slate-900 dark:border-slate-800 dark:text-slate-300 dark:hover:border-slate-700 hover:border-slate-300'
+                                ? 'bg-blue-600 border-blue-600 text-white dark:bg-blue-500 dark:border-blue-500'
+                                : 'bg-white border-slate-200 text-slate-800 dark:bg-slate-900 dark:border-slate-800 dark:text-slate-300 dark:hover:border-slate-700 hover:border-slate-300'
                                 }`}
                         >
                             <span>{track}</span>
