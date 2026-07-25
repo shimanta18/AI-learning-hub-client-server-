@@ -80,6 +80,7 @@ export default function MarketingLayout({ children }: { children: React.ReactNod
                                 <div className="absolute left-0 mt-2 w-56 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl py-2 z-50">
                                     <Link href="/faq" onClick={() => setResourcesOpen(false)} className="block px-4 py-2 text-sm text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white">Help & FAQ</Link>
                                     <Link href="/courses" onClick={() => setResourcesOpen(false)} className="block px-4 py-2 text-sm text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white">All courses</Link>
+                                    <Link href="/AIStudyPlanner" onClick={() => setResourcesOpen(false)} className="block px-4 py-2 text-sm text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white">Study Planner</Link>
                                 </div>
                             )}
                         </div>

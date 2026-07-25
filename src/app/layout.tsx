@@ -1,8 +1,10 @@
-// app/layout.tsx
+
 import { Inter } from 'next/font/google';
 import './globals.css';
 import AIChatWidget from '@/components/AIChatWidget';
-import { ThemeProvider } from '@/components/ThemeProvider'; // Update path based on your layout setup
+import { ThemeProvider } from '@/components/ThemeProvider';
+import AIStudyPlanner from '../app/AIStudyPlanner/page';
+
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -22,6 +24,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
                     {/* This injects the floating AI button globally on every page */}
                     <AIChatWidget />
+
                 </ThemeProvider>
             </body>
         </html>
