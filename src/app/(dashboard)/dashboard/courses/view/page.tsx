@@ -2,8 +2,8 @@
 
 import React, { useState, useEffect, Suspense, useMemo } from 'react';
 import { useParams, useSearchParams } from 'next/navigation';
+import { FaShareSquare } from "react-icons/fa";
 
-// 1. HELPER: Safely extracts the 11-character YouTube ID from a full URL or raw ID
 const extractYouTubeId = (urlOrId?: string): string => {
     if (!urlOrId) return '';
     // If it's already just an ID (no slashes or URL params)
@@ -71,9 +71,9 @@ function CourseContent() {
                     throw new Error(`Course not found (Status: ${res.status})`);
                 }
 
-                const data: Course = await res.json();
-                console.log("API Data received:", data);
-                setCourse(data);
+                const response = await res.json();
+                console.log("API Data received:", response);
+                setCourse(response.data || response);
             } catch (err: unknown) {
                 if ((err as Error).name !== 'AbortError') {
                     console.error('Failed to load course:', err);
@@ -156,7 +156,7 @@ function CourseContent() {
                         🔖
                     </button>
                     <button type="button" className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-indigo-600 text-white font-medium hover:bg-indigo-700 transition shadow-sm">
-                        <span>🔗</span> Share
+                        <span><FaShareSquare /></span> Share
                     </button>
                 </div>
             </header>
