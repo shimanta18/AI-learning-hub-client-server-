@@ -29,8 +29,8 @@ interface Course {
     title: string;
     description: string;
     category: string;
-    youtubeVideoId?: string; // Added to match your MongoDB schema
-    lessons?: Lesson[];      // Made optional
+    youtubeVideoId?: string;
+    lessons?: Lesson[];
 }
 
 type TabType = 'summary' | 'files' | 'resources' | 'qa';
@@ -61,7 +61,7 @@ function CourseContent() {
                 setIsLoading(true);
                 setError(null);
 
-                // 2. FIX: Added a fallback to localhost:5000 or your render URL so it doesn't query port 3000
+                // Added a fallback to localhost:5000 or  render URL so it doesn't query port 3000
                 const apiBase = 'https://ai-learning-hub-server-side.onrender.com';
                 const res = await fetch(`${apiBase}/api/v1/courses/${courseId}`, {
                     signal: controller.signal,
@@ -90,7 +90,6 @@ function CourseContent() {
         return () => controller.abort();
     }, [courseId]);
 
-    // 3. FIX: Normalize data structure. If the course has no `lessons` array but has a root video URL, 
     // we transform the course itself into a 1-item "lesson" array so the UI renders perfectly.
     const courseLessons: Lesson[] = useMemo(() => {
         if (course?.lessons && course.lessons.length > 0) {
