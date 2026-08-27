@@ -23,7 +23,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
             if (!currentUser) {
-                router.push('/login');
+                router.push('/sign-in');
                 return;
             }
 
@@ -69,7 +69,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     const handleLogout = async () => {
         try {
             await signOut(auth);
-            router.push('/login');
+            router.push('/sign-in');
         } catch (error) {
             console.error("Error signing out:", error);
         }
