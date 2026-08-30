@@ -50,6 +50,14 @@ export default function CourseDetailsPage() {
         );
     }
 
+    // Determine if the course is free or paid
+    const isFree = !course.price || course.price.toString().toLowerCase() === 'free' || course.price == 0;
+
+    // Set dynamic route based on payment status
+    const enrollHref = isFree
+        ? `/dashboard/courses/view?courseId=${course._id || course.id}`
+        : `/checkout/${course._id || course.id}`;
+
     return (
         <div className="w-full bg-white text-slate-900 min-h-screen">
             {/* BREADCRUMB */}
@@ -161,14 +169,18 @@ export default function CourseDetailsPage() {
                     <div className="p-6 space-y-6">
                         <div className="flex items-baseline justify-between">
                             <span className="text-sm font-bold text-slate-400">Access Tier</span>
-                            <span className="text-3xl font-black text-slate-900">{course.price || 'Free'}</span>
+                            {/* Dynamically display Free or the Price */}
+                            <span className="text-3xl font-black text-slate-900">
+                                {isFree ? 'Free' : `${course.price}`}
+                            </span>
                         </div>
 
+                        {/* Dynamically assigned Link based on isFree status */}
                         <Link
-                            href={`/dashboard/courses/view?courseId=${course._id || course.id}`}
+                            href={enrollHref}
                             className="w-full py-4 bg-slate-950 hover:bg-slate-800 text-white font-black text-sm rounded-xl transition-all shadow-md flex items-center justify-center space-x-2 group"
                         >
-                            <span>Enroll in Course</span>
+                            <span>{isFree ? 'Enroll for Free' : 'Proceed to Checkout'}</span>
                         </Link>
                     </div>
                 </div>
